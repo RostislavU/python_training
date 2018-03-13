@@ -16,8 +16,6 @@ class test_add_contact(unittest.TestCase):
                             firefox_binary="F:/Mozilla/FirefoxPortableESR/App/Firefox64/firefox.exe")
         self.wd.implicitly_wait(60)
 
-
-
     def logout(self, wd):
         wd.find_element_by_link_text("Logout").click()
 
@@ -118,12 +116,13 @@ class test_add_contact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
 
-        self.add_contact(wd, contact(firstname="", middlename="", lastname="", nickname="",
+        self.add_contact(wd, Contact(firstname="", middlename="", lastname="", nickname="",
                          title="", company="", address="", home_phone="",
                          mobile_phone="", work_phone="", fax_phone="",
                          email="", email2="", email3="",
                          homepage="", ayear="", byear="", address2="",
                          phone2="", notes=""))
+
         self.logout(wd)
 
 if __name__ == '__main__':
