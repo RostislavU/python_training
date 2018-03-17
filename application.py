@@ -1,4 +1,6 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
+
+
 class Application:
 
     def __init__(self):
@@ -53,12 +55,6 @@ class Application:
     def logout(self):
         wd = self.wd
         wd.find_element_by_link_text("Logout").click()
-
-
-
-
-
-
 
     def destroy(self):
         self.wd.quit()
