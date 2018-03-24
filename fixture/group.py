@@ -38,7 +38,6 @@ class GroupHelper:
         self.select_first_group()
         # submit edit
         wd.find_element_by_name("edit").click()
-        # fill group form
         self.fill_group_form(new_group_data)
         # submit group creation
         wd.find_element_by_name("update").click()
