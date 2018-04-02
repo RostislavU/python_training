@@ -28,8 +28,7 @@ class GroupHelper:
     def delete_first_group(self):
         wd = self.app.wd
         self.open_groups_page()
-        #select first group
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_group()
         #submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
@@ -70,3 +69,8 @@ class GroupHelper:
             id = element.find_element_by_name("selected[]").get_attribute("value")
             groups.append(Group(name=text, id=id))
         return groups
+
+    def count(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        return len(wd.find_elements_by_name("selected[]"))

@@ -7,7 +7,7 @@ class ContactHelper:
         wd = self.app.wd
         # init contact creation
         wd.find_element_by_link_text("add new").click()
-        wd.self.fill_contact_form(contact)
+        self.fill_contact_form(contact)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def edit_first_contact(self, new_contact_info):
