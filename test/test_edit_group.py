@@ -2,6 +2,8 @@ from model.group import Group
 
 
 def test_edit_first_group_name(app):
+    if app.group.count() == 0:
+        app.group.create(Group(name="thisGroupWillBeDeleted"))
     old_groups = app.group.get_group_list()
     group = Group(name="newName")
     group.id = old_groups[0].id
@@ -13,6 +15,8 @@ def test_edit_first_group_name(app):
 
 
 def test_edit_first_group_header(app):
+    if app.group.count() == 0:
+        app.group.create(Group(name="thisGroupWillBeDeleted"))
     old_groups = app.group.get_group_list()
     app.group.edit_first_group(Group(header="NewHeader"))
     new_groups = app.group.get_group_list()
