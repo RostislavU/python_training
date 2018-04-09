@@ -20,11 +20,15 @@ class ContactHelper:
         self.contact_cashe = None
 
     def edit_first_contact(self, new_contact_info):
+        self.edit_contact_by_index(0, new_contact_info)
+
+    def edit_contact_by_index(self, index, new_contact_info):
         wd = self.app.wd
         self.open_home_page()
 
         #init contact eding
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        wd.find_elements_by_css_selector("td:nth-child(8)")[index].click()
+        #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         self.fill_contact_form(new_contact_info)
         wd.find_element_by_name("update").click()
         self.contact_cashe = None
@@ -58,10 +62,13 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def delete_contact(self):
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.contact_cashe = None
