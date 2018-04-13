@@ -99,10 +99,26 @@ class ContactHelper:
             wd = self.app.wd
             self.open_home_page()
             self.contact_cashe = []
-            for element in wd.find_elements_by_name("entry"):
-                lastname = element.find_element_by_css_selector("td:nth-child(2)").text
-                firstname = element.find_element_by_css_selector("td:nth-child(3)").text
-                id = element.find_element_by_name("selected[]").get_attribute("value")
-                self.contact_cashe.append(Contact(lastname=lastname, firstname=firstname, id=id))
+            for row in wd.find_elements_by_name("entry"):
+                cells = row.find_elements_by_tag_name("td")
+                firstname = cells[1].text
+                lastname = cells[2].text
+                id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                all_phones = cells[5].text.splitlines()
+                self.contact_cashe.append(Contact(lastname=lastname, firstname=firstname, id=id,
+                                                  home_phone=all_phones[0], mobile_phone=all_phones[1],
+                                                  work_phone=all_phones[2], phone2=all_phones[3]))
         return list(self.contact_cashe)
 
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_edit_by_index(index)
+        firstname = wd.find_elements_by_name("firstname").get_attribute("value")
+        lastname = wd.find_elements_by_name("lastname").get_attribute("value")
+        id  = wd.find_elements_by_name("id").get_attribute("value")
+        homephone = wd.find_elements_by_name("home").get_attribute("value")
+        workphone = wd.find_elements_by_name("work").get_attribute("value")
+        mobilphone = wd.find_elements_by_name("mobile").get_attribute("value")
+        secondaryphone = wd.find_elements_by_name("phone2").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, id=id, home_phone=homephone,
+                       work_phone=workphone, mobile_phone=mobilphone, phone2=secondaryphone)
