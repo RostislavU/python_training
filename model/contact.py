@@ -32,7 +32,7 @@ class Contact:
                (self.firstname == other.firstname or self.firstname is None or other.firstname is None)
 
     def __repr__(self):
-        return "%s:%s:%s" % (self.id, self.lastname, self.firstname)
+        return "%s:%s:%s" % (self.id, self.firstname, self.lastname)
 
     def id_or_max(self):
         if self.id:
