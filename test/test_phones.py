@@ -15,10 +15,14 @@ def test_on_contact_view_page(app):
     assert contact_from_view_page.mobile_phone == contact_from_edit_page.mobile_phone
     assert contact_from_view_page.phone2 == contact_from_edit_page.phone2
 
+
 def merge_phones_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
-                            map(lambda x: clear(x),[contact.home_phone, contact.work_phone, contact.mobile_phone, contact.phone2])))
+                            map(lambda x: clear(x), filter(lambda x: x is not None,
+                                                           [contact.home_phone, contact.mobile_phone,
+                                                            contact.work_phone, contact.phone2]))))
 
 
 def clear(s):
-    return re.sub("[() -]","", s)
+    return re.sub("[() -]", "", s)
+
