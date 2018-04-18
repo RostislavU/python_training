@@ -25,5 +25,7 @@ def stop(request):
     request.addfinalizer(fin)
     return fixture
 
-def pytest_add_option(parser):
-    parser.addoption("--browser", action="store", default= "firefox")
+
+def pytest_addoption(parser):
+    parser.addoption("--browser", action="store", default="firefox")
+
