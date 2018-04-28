@@ -1,6 +1,7 @@
 import pymysql.cursors
 from model.group import Group
 
+
 class DbFixture:
 
     def __init__(self, host, name, user, password):
@@ -12,6 +13,7 @@ class DbFixture:
                                           user=user,
                                           password=password,
                                           database=name)
+        self.connection.autocommit(True)
 
     def get_group_list(self):
         group_list = []
