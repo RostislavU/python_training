@@ -6,7 +6,7 @@
   },
   "db": {
     "host": "localhost",
-    "name": "addressbook",
+    "database": "addressbook",
     "password":"",
     "user": "root"
   }
