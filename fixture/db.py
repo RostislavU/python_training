@@ -28,7 +28,6 @@ class DbFixture:
             cursor.close()
         return group_list
 
-
     def get_contact_list(self):
         contact_list = []
         cursor = self.connection.cursor()
@@ -40,7 +39,6 @@ class DbFixture:
         finally:
             cursor.close()
         return contact_list
-
 
     def destroy(self):
         self.connection.close()

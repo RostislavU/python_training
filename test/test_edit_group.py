@@ -2,7 +2,7 @@ from model.group import Group
 from random import randrange
 
 
-def test_edit_group_name_by_index(app, db):
+def test_edit_group_name_by_index(app, db, check_ui):
     if len(db.get_group_list()) == 0:
         app.group.create(Group(name="thisGroupWillBeDeleted"))
     old_groups = db.get_group_list()
@@ -13,7 +13,8 @@ def test_edit_group_name_by_index(app, db):
     new_groups = db.get_group_list()
     assert len(old_groups) == len(new_groups)
     old_groups[index] = group
-    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+    if check_ui:
+        assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
 def test_edit_first_group_header(app, db):
