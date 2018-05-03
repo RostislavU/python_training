@@ -1,5 +1,5 @@
 from model.group import Group
-
+from  model.contact import Contact
 
 class GroupHelper:
 
@@ -118,3 +118,16 @@ class GroupHelper:
         wd = self.app.wd
         self.open_groups_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_contact_in_group(self, group):
+        wd = self.app.wd
+        self.open_groups_page()
+        contact_list = []
+        wd.get("http://localhost/addressbook/index.php?group=%s" % group.id)
+        for row in wd.find_elements_by_name("entry"):
+            cells = row.find_elements_by_tag_name("td")
+            firstname = cells[2].text
+            lastname = cells[1].text
+            id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+            contact_list.append(Contact(id = str(id), lastname=lastname, firstname=firstname))
+        return contact_list

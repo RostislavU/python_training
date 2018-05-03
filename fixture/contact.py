@@ -1,4 +1,5 @@
 from model.contact import Contact
+from model.group import Group
 import re
 
 
@@ -92,7 +93,7 @@ class ContactHelper:
     def delete_contact_by_id(self, id):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.select_contact_by_id(id)
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.contact_cashe = None
@@ -140,8 +141,6 @@ class ContactHelper:
                        work_phone=workphone, mobile_phone=mobilphone, phone2=secondaryphone,
                        email=email, email2=email2, email3=email3, address=address)
 
-
-
     def get_contact_info_from_view_page(self, index):
         wd = self.app.wd
         self.open_contact_view_by_index(index)
@@ -152,3 +151,30 @@ class ContactHelper:
         secondaryphone = re.search("P: (.*)", text).group(1)
         return Contact(home_phone=homephone, work_phone=workphone,
                        mobile_phone=mobilphone, phone2=secondaryphone)
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+    def get_group_list_from_view_page(self, id):
+        wd = self.app.wd
+        self.open_contact_view_by_id()
+        text = wd.find_element_by_id("content").text
+
+    def open_contact_view_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_css_selector("a[href='view.php?id=%s']" % id).click()
+
+    def select_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("select[value='%s']" % id).click()
+
+    def add_contact_to_group(self, contact, group):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(contact.id)
+        self.select_group_by_id(group.id)
+        wd.find_element_by_css_selector("input[value='Add to']").click()
+
+
