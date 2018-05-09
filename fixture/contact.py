@@ -177,4 +177,10 @@ class ContactHelper:
         self.select_group_by_id(group.id)
         wd.find_element_by_css_selector("input[value='Add to']").click()
 
+    def del_contact_from_group(self, contact, group):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.get("http://localhost/addressbook/index.php?group=%s" % group.id)
+        self.select_contact_by_id(contact.id)
+        wd.find_element_by_css_selector("input[name='remove']").click()
 
